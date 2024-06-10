@@ -117,7 +117,7 @@ const userController = {
         sameSite: 'None',
         maxAge: 3 * 60 * 60 * 1000,
         path: '/', // Ensures the cookie is available throughout the site
-        domain: 'https://twitter-frontend-bice-nine.vercel.app', // Adjust as needed to match your domain
+      
       });
 
       res.cookie("username",username, {
@@ -126,7 +126,7 @@ const userController = {
         sameSite: 'None',
         maxAge: 3 * 60 * 60 * 1000,
         path: '/', // Ensures the cookie is available throughout the site
-        domain: 'https://twitter-frontend-bice-nine.vercel.app', // Adjust as needed to match your domain
+       
         
       }).json({ message: "Login successful",code:"login" });
 
