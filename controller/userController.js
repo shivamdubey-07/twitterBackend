@@ -106,7 +106,6 @@ const userController = {
       res.cookie("token", token, {
       
         httpOnly: false, // Prevent client-side JavaScript from accessing the cookie
-        secure: true, // Ensure the cookie is sent over HTTPS
         sameSite: 'None', // Allow cross-site cookies
         maxAge: 3 * 60 * 60 * 1000, // 3 hours
         
@@ -115,7 +114,6 @@ const userController = {
 
       res.cookie("token", token, {
         httpOnly: false,
-        secure: true,
         sameSite: 'None',
         maxAge: 3 * 60 * 60 * 1000,
         path: '/', // Ensures the cookie is available throughout the site
@@ -125,7 +123,6 @@ const userController = {
       res.cookie("username",username, {
       
         httpOnly: false,
-        secure: true,
         sameSite: 'None',
         maxAge: 3 * 60 * 60 * 1000,
         path: '/', // Ensures the cookie is available throughout the site
