@@ -12,11 +12,9 @@ import cloudinary from "./config/cloudinaryconfig.js";
 import cookieParser from "cookie-parser";
 import  {verifyToken}  from "./middleware/userAuthenticate.js";
 
-// import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 
-// import userRoutes from "./routes/userRoutes.js"
 import controller from "./controller/userController.js";
 import{userData} from "./controller/userData.js";
 
@@ -44,46 +42,12 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(morgan("common"));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-// importing the db connection from db file
 import("./config/db.js");
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     return cb(null, "/uploads");
-//   },
-//   filename: function (req, file, cb) {
-//     return cb(null, `${Date.now()}-${file.originalname}`);
-//   },
-// });
 
-// const upload = multer({ storage });
+dotenv.config(); 
 
-// user auth endpoints
 
-// multer cloudinary
-dotenv.config(); // Load environment variables
-
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET
-// });
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   params: {
-//     folder: (req, file) => `users/${req.body.username}`, // Save files in a user-specific folder
-//     public_id: (req, file) => Date.now().toString(), // Optional - specify file name
-//   },
-// });
-// storage.filename = function (req, file, cb) {
-  
-//     if (err) return cb(err);
-//     cb(null, raw.toString('hex') + path.extname(file.originalname));
-//     cb(null, `${Date.now()}-${file.originalname}`);
-  
-// };
-
-// const upload = multer({ storage });
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -104,7 +68,7 @@ app.use("/api/verify-email", async (req, res) => {
     }
 
     user.verified = true;
-    user.verificationToken = undefined; // Remove token after verification
+    user.verificationToken = undefined; 
     await user.save();
 
     res.status(200).json({ message: "Email verified successfully" });
@@ -116,9 +80,8 @@ app.use("/api/verify-email", async (req, res) => {
 app.use("/api/login", controller.userLogin);
 
 
-// app.use("/api/Home",verifyToken,userAuthenticate);
-app.get("/",verifyToken,(req,res)=>{
-  console.log("aa gya hu bc",req.user)
+app.get("/",(req,res)=>{
+
   res.json({message:"hello"})
 });
 app.patch("/api/user/profileUpdate",verifyToken,upload.single('file'), userData.updateProfile);
@@ -137,7 +100,6 @@ app.get("/api/user/following",verifyToken,userData.getFollowing);
 app.post("/api/user/searchUser",verifyToken,userData.searchUser)
 
 
-// app.use("/api/users/posts/:id",userAuthenticate,controller.getUserPost);
 app.listen(process.env.PORT, () => {
   console.log("The server is running on ");
 });
