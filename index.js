@@ -24,7 +24,7 @@ import User from "./models/userSchema.js";
 
 const app = express();
 const corsOptions = {
-  origin:"http://localhost:3000",
+  origin:"https://twitter-frontend-bice-nine.vercel.app",
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -80,14 +80,8 @@ app.use("/api/verify-email", async (req, res) => {
 app.use("/api/login", controller.userLogin);
 
 
-<<<<<<< HEAD
 app.get("/",(req,res)=>{
 
-=======
-// app.use("/api/Home",verifyToken,userAuthenticate);
-app.get("/",(req,res)=>{
-  
->>>>>>> a81c630cd211d831d689913319154f2c80bf75e9
   res.json({message:"hello"})
 });
 app.patch("/api/user/profileUpdate",verifyToken,upload.single('file'), userData.updateProfile);
