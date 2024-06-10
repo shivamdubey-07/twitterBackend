@@ -110,14 +110,26 @@ const userController = {
         sameSite: 'None', // Allow cross-site cookies
         maxAge: 3 * 60 * 60 * 1000, // 3 hours
         
+        
+      });
+
+      res.cookie("token", token, {
+        httpOnly: false,
+        secure: true,
+        sameSite: 'None',
+        maxAge: 3 * 60 * 60 * 1000,
+        path: '/', // Ensures the cookie is available throughout the site
+        domain: 'https://twitter-frontend-bice-nine.vercel.app', // Adjust as needed to match your domain
       });
 
       res.cookie("username",username, {
       
-        httpOnly: false, // Prevent client-side JavaScript from accessing the cookie
-        secure: true, // Ensure the cookie is sent over HTTPS
-        sameSite: 'None', // Allow cross-site cookies
-        maxAge: 3 * 60 * 60 * 1000, // 3 hours
+        httpOnly: false,
+        secure: true,
+        sameSite: 'None',
+        maxAge: 3 * 60 * 60 * 1000,
+        path: '/', // Ensures the cookie is available throughout the site
+        domain: 'https://twitter-frontend-bice-nine.vercel.app', // Adjust as needed to match your domain
         
       }).json({ message: "Login successful",code:"login" });
 
