@@ -48,8 +48,16 @@ const userController = {
       if(!savedUser){
         res.json({message:"Enter Unique username"})
        }
-      res.cookie("signuptoken", token).json({ message: "signup successful" });
 
+       res.cookie("signuptoken", token, {
+      
+        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+        secure: true, // Ensure the cookie is sent over HTTPS
+        sameSite: 'None', // Allow cross-site cookies
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours
+        
+      }).json({ message: "signup successful" });
+   
       const newOtpVerification = new OtpModel({
         userId: savedUser._id,
         otp: otp,
@@ -95,9 +103,26 @@ const userController = {
       if (user) {
 
       const token = jwt.sign({ username: username }, "shivam");
+      res.cookie("token", token, {
+      
+        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+        secure: true, // Ensure the cookie is sent over HTTPS
+        sameSite: 'None', // Allow cross-site cookies
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours
+        
+      });
 
-      res.cookie("token", token);
-      res.cookie("username",username).json({ message: "Login successful",code:"login" });
+      res.cookie("username",username, {
+      
+        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+        secure: true, // Ensure the cookie is sent over HTTPS
+        sameSite: 'None', // Allow cross-site cookies
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours
+        
+      }).json({ message: "Login successful",code:"login" });
+
+    
+     
       }
     } catch (err) {
       console.error(err);
