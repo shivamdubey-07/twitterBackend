@@ -29,44 +29,17 @@ export const userData = {
     res.status(200).json(users);
   },
   getAllfollowingPosts: async (req, res) => {
-    // try {
-    //   // Find the current user
-    //   const currentUser = await User.findOne({ username: req.user.username }).populate('following');
-  
-    //   if (!currentUser) {
-    //     return res.status(404).json({ error: "User not found" });
-    //   }
-    //  console.log(currentUser,"currentUser")
-    //   // Get the _ids of users the current user is following
-    //   const followingUserIds = currentUser.following.map(user => user._id);
-  
-    //   // Find tweets where the username (userId) is in the followingUserIds array
-    //   console.log('Tweet Query:', { username: { $in: followingUserIds } });
-    //   const posts = await Tweet.find({ username: { $in: followingUserIds } })
-    //     // .populate('username', 'name') // Populate the username field with the user's name
-    //     // .sort({ createdAt: -1 })
-    //     .limit(100) // Sort by createdAt in descending order (newest first)
-    //     .exec();
-        
-    //   console.log(posts)
-    //   console.log("Number of Posts Retrieved:", posts.length);
-
-    //   res.status(200).json(posts);
-    // } catch (error) {
-    //   console.error("Error fetching posts:", error);
-    //   res.status(500).json({ error: "Internal server error" });
-    // }
+   
+ 
     try {
       const username = req.user.username;
-      // console.log(username, "ye user 2 wala");
     
-      // Find the user and populate the following field
       const user = await User.findOne({ username: username })
       .populate("profilePicture")
       .populate({
         path: 'following',
         populate: {
-          path: 'tweets', // Assuming 'tweets' is the field name in the User schema
+          path: 'tweets', 
         }
       });
     
@@ -74,7 +47,6 @@ export const userData = {
         return res.status(404).json({ message: 'User not found' });
       }
     
-      // Format the following users and their tweets
       const formattedFriends = user.following.map(friend => ({
         username: friend.username,
         name: friend.name,
@@ -86,23 +58,11 @@ export const userData = {
     })
     arr=arr.flat();
     arr.sort((a, b) => b.createdAt - a.createdAt);
-      // console.log("arr",arr)
     let ans=[]
-    // arr.map(tweet=>{
-      
-    // })
-      // console.log(formattedFriends);
+  
       res.status(200).json({arr});
     }
-    // const user = await User.find({username:username}).populate('following');
-    // console.log("user",user)
-    // const followingIds = user.following.map((followedUser) => followedUser._id);
-    // console.log("followingIds",followingIds)
-    // const tweets = await Tweet.find({ _id: { $in: followingIds } }).sort({ createdAt: -1 });
-    // console.log("tweets",tweets)
-
-    // res.json(tweets);
-    // } 
+   
     catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -174,7 +134,6 @@ updateTweet: async (req, res) => {
 
     const updateData = {};
     
-    // Add fields that are present in the request body
     if (content !== null && content !== undefined) {
       updateData.content = content;
     }
@@ -204,12 +163,11 @@ catch{
 
   },
 
-  // follow user
+  
 
   followUser: async (req, res) => {
     console.log("request follow me aya hai")
     try {
-      //second is following first
       const { username } = req.user;
       const second=username
       const {first}=req.body;
@@ -305,45 +263,8 @@ catch{
       console.error("Error fetching following:", error);
       res.status(500).json({ error: "Internal server error" });
     }},
-    // // not tested yet
-    // updateProfile: async (req, res) => {
-    //   try {
-    //     const { username, name, bio, location, email, } = req.user;
-    //     const user = await User.findOne({ username: username });
-        
-    //     if (!user) {
-    //       return res.status(404).json({ error: "User not found" });
-    //     }
-    //     const file = req.file;
-    //   let mediaUrl = '';
-
-    //   if (file) {
-    //     const result = await cloudinary.uploader.upload(file.path);
-    //     mediaUrl = result.secure_url;
-    //   }
-    //   const tweetUpdateResult = await Tweet.updateMany(
-    //     { username: req.user.username },
-    //     {   profilePicture: mediaUrl  }
-    //   );
-    //   console.log('Tweet update result:', tweetUpdateResult);
-    //     await User.updateOne(
-    //       { _id: user._id },
-    //       {
-    //         $set: {
-    //           name,
-    //           bio,
-    //           location,
-    //           email,
-    //           username,
-    //           profilePicture: mediaUrl,
-    //         },
-    //       }
-    //       );
-    // }
-    // catch (error) {
-    //   console.error("Error updating profile:", error);
-    //   res.status(500).json({ error: "Internal server error" });
-    // }},
+   
+   
     updateProfile: async (req, res) => {
       try {
         console.log("yaha aya");
@@ -351,7 +272,6 @@ catch{
         const updateData = {};
         const { name, bio, location } = req.body;
     
-        // Add fields that are present in the request body
         if (name !== null && name !== undefined) {
           updateData.name = name;
         }

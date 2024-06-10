@@ -24,7 +24,7 @@ import User from "./models/userSchema.js";
 
 const app = express();
 const corsOptions = {
-  origin:"https://twitter-frontend-flax.vercel.app",
+  origin:"http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOptions));
