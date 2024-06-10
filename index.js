@@ -117,8 +117,8 @@ app.use("/api/login", controller.userLogin);
 
 
 // app.use("/api/Home",verifyToken,userAuthenticate);
-app.get("/",verifyToken,(req,res)=>{
-  console.log("aa gya hu bc",req.user)
+app.get("/",(req,res)=>{
+  
   res.json({message:"hello"})
 });
 app.patch("/api/user/profileUpdate",verifyToken,upload.single('file'), userData.updateProfile);
